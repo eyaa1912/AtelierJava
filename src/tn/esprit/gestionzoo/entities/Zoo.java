@@ -1,18 +1,53 @@
+package tn.esprit.gestionzoo.entities;
+
 public class Zoo {
-    Animal[] animals = new Animal[25];
-    String name;
-    String city;
-    final int nbrCages;
-    int nombreAnimaux = 0;
+
+    private Animal[] animals = new Animal[25];
+    private String name;
+    private String city;
+    private final int nbrCages;
+    private int nombreAnimaux = 0;
 
     public Zoo() {
         nbrCages = 25;
     }
 
     public Zoo(String name, String city, int nbrCages) {
-        this.name = name;
+        setName(name);
         this.city = city;
         this.nbrCages = nbrCages;
+    }
+
+    public Animal[] getAnimals() {
+        return animals;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        if (name != null && !name.trim().isEmpty()) {
+            this.name = name;
+        } else {
+            System.out.println("Le nom du zoo ne doit pas être vide.");
+        }
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public int getNbrCages() {
+        return nbrCages;
+    }
+
+    public int getNombreAnimaux() {
+        return nombreAnimaux;
     }
 
     public void displayZoo() {
@@ -25,11 +60,11 @@ public class Zoo {
     }
 
     public boolean addAnimal(Animal animal) {
-        if (nombreAnimaux >= animals.length) {
+        if (isZooFull()) {
             return false;
         }
 
-        if (searchAnimal(animal.name) != -1) {
+        if (searchAnimal(animal.getName()) != -1) {
             return false;
         }
 
@@ -47,7 +82,7 @@ public class Zoo {
 
     public int searchAnimal(String name) {
         for (int i = 0; i < nombreAnimaux; i++) {
-            if (animals[i].name.equals(name)) {
+            if (animals[i].getName().equals(name)) {
                 return i;
             }
         }
@@ -56,7 +91,7 @@ public class Zoo {
     }
 
     public boolean removeAnimal(Animal animal) {
-        int position = searchAnimal(animal.name);
+        int position = searchAnimal(animal.getName());
 
         if (position == -1) {
             return false;
